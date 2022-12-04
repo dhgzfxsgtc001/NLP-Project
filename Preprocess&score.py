@@ -23,6 +23,18 @@ import pandas as pd
 file = pd.read_csv('wsb_comments_2021-2_ticker_present.csv')
 my_data = file[["body", "created_utc"]]
 
+
+
+# label the stock mentioned in the comment
+# my_data_adj["stock_mentioned"] = 
+
+# take TSLA as an example
+Indicators = {'TSLA', 'Tesla', 'Elon Musk'}
+c = [True if len(set(my_data.body[i].split()).intersection(Indicators)) != 0 else False for i in range(len(my_data))]
+my_data['company'] = c
+
+
+
 from utils import *
 
 def Preprocessing(dataset, body):
@@ -61,9 +73,4 @@ my_data_adj['score'] = comp
 
 # With finance dictionary --- still working on
 
-# label the stock mentioned in the comment with stocks
-# my_data_adj["stock_mentioned"] = 
-
-# take TSLA as an example
-# Indicators = ['TSLA', 'Tesla', 'Elon Musk', 'Musk']
-# still working on
+# Narrow the score range to +/-0.95 to filter out outliers
